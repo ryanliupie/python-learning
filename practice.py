@@ -1,33 +1,22 @@
-def largest(nums): 
-    biggest = nums[0]
+import heapq
 
+def topKFrequent(nums, k):
+    hashmap = dict()
     for num in nums: 
-        if num > biggest: 
-            biggest = num 
+        hashmap[num] = hashmap.get(num, 0) + 1 
+
+    heap = []
+
+    for key, value in hashmap.items():
+        if len(heap) < k or value > heap [0][0]: 
+            heapq.heappush(heap, [value, key])
+        if len(heap) > k: 
+            heapq.heappop(heap)
     
-    return biggest
-
-print(largest([5,2,9,1]))
-
-
-def another(nums): 
-    sorted_nums = sorted(nums)
-    return sorted_nums[-1]
-
-print(another([5,2,9,1]))
-
-
-
-def another1(nums): 
-    array = dict()
-    for num in nums:
-        array[num] = array.get(num, 0) + 1
-
     result = []
-    for key in array.keys(): 
-        result.append(key)
+    for pair in heap: 
+        result.append(pair[1])
     
-    sorted_nums = sorted(result)
-    return sorted_nums[-1]
-    
-print(another1([5,2,9,1]))
+    return result 
+
+print(topKFrequent([1,1,2,2,2,3,3,3,3], 2))
